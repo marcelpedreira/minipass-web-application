@@ -1,5 +1,6 @@
 import React from 'react'
 import LoadingContainer from 'common/components/LoadingContainer'
+import firebase from 'firebaseConfig'
 
 interface CardHolder {
     name: string;
@@ -10,18 +11,61 @@ interface Error {
     message: string | null;
 }
 
+interface CardHoldersState {
+    isloading: boolean;
+    data: CardHolder[];
+    error: Error |  null;
+}
+
 export default function CardHoldersContainer() {
-    const card_holders: CardHolder[] = [];
-    const loading = true;
-    const error: Error = {
-        message: null
+    const initialState: CardHoldersState = {
+        isloading: false,
+        data: [],
+        error: null
     };
 
-    const message = error && error.message;
+    const [state, dispatch] = React.useReducer((state: CardHoldersState, action: any) => {
+        switch (action.type) {
+            case 'loading':
+                return {
+                    isloading: true,
+                    data: state.data,
+                    error: state.error
+                };
+            case 'fetched':
+                return {
+                    isloading: false,
+                    data: action.payload,
+                    error: state.error
+                };
+            case 'error':
+                return {
+                    isloading: false,
+                    data: state.data,
+                    error: action.payload,
+                };
+            default:
+            throw new Error();
+        }
+    }, initialState);
+
+    React.useEffect(() => {
+        fetchData();
+    }, [])
+
+    const fetchData = async () => {
+        dispatch({type: 'loading'});
+        const db = firebase.firestore();
+        const data = await db.collection('card_holders').get();
+        const payload = data.docs.map(doc => doc.data());
+        dispatch({type: 'fetched', payload});
+    }
+
+    const message = state.error && state.error.message;
 
     return (
-        <LoadingContainer isLoading = {loading} message = {message}>
-            {card_holders.map(card_holder => {
+        <LoadingContainer isLoading = {state.isloading} message = {message}>
+            {state.data&&state.data.map((card_holder: CardHolder) => {
                 return (
                     <>
                         <p>name: {card_holder.name}</p>
