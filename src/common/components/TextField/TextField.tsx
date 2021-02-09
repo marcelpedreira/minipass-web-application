@@ -1,13 +1,20 @@
 import React from "react";
 import TextField from '@material-ui/core/TextField';
 
+// const MyInput = ({ field, form, ...props }) => {
+//   return <input {...field} {...props} />;
+// };
+
 const TextFieldInput = (props: any) => {
   const {
     input,
     label,
-    name,
+    // name,
     // classes,
     // meta: { touched, error },
+    // meta,
+    form: { touched, error },
+    field: { name, value, onChange, onBlur },
     helperText,
     fullWidth,
     labelProps,
@@ -22,8 +29,9 @@ const TextFieldInput = (props: any) => {
       name={name}
       label={label}
       // className={classes.textField}
-      value={input.value}
-      onChange={event => input.onChange(event.target.value)}
+      value={value}
+      // onChange={event => input.onChange(event.target.value)}
+      onChange={onChange}
       variant="outlined"
       fullWidth={fullWidth}
       margin={margin}

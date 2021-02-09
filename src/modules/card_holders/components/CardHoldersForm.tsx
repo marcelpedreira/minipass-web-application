@@ -30,8 +30,12 @@ export default function CardHolderForm(props: any) {
       >
         <Form>       
           <Grid container spacing={3}>
-            <Grid item lg={4} md={4} sm={12}> <Field name="name" label="name" component={TextField} fullWidth margin="dense"/> </Grid>
-            <Grid item lg={4} md={4} sm={12}> <Field name="card_number" label="card_number" component={TextField} fullWidth margin="dense"/> </Grid>
+            <Grid item lg={4} md={4} sm={12}> 
+              <Field name="name" label="name" component={TextField} fullWidth margin="dense"/> 
+            </Grid>
+            <Grid item lg={4} md={4} sm={12}> 
+              <Field name="card_number" label="card_number" component={TextField} fullWidth margin="dense"/> 
+            </Grid>
             <Grid item lg={12} md={12} sm={12}>
               <Button
                 type="submit"
