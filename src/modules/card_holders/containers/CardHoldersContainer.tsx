@@ -1,8 +1,10 @@
 import React from 'react'
 import LoadingContainer from 'common/components/LoadingContainer'
 import firebase from 'firebaseConfig'
+import CardHoldersTable from '../components/CardHoldersTable';
 
-interface CardHolder {
+export interface CardHolder {
+    ref: string;
     name: string;
     card_number: string;
 }
@@ -17,7 +19,7 @@ interface CardHoldersState {
     error: Error |  null;
 }
 
-export default function CardHoldersContainer() {
+export default function CardHoldersContainer(props: any) {
     const initialState: CardHoldersState = {
         isloading: false,
         data: [],
@@ -57,7 +59,7 @@ export default function CardHoldersContainer() {
         dispatch({type: 'loading'});
         const db = firebase.firestore();
         const data = await db.collection('card_holders').get();
-        const payload = data.docs.map(doc => doc.data());
+        const payload = data.docs.map(doc => ({ref: doc.ref, ...doc.data()}));
         dispatch({type: 'fetched', payload});
     }
 
@@ -65,14 +67,15 @@ export default function CardHoldersContainer() {
 
     return (
         <LoadingContainer isLoading = {state.isloading} message = {message}>
-            {state.data&&state.data.map((card_holder: CardHolder) => {
+            {/* {state.data&&state.data.map((card_holder: CardHolder) => {
                 return (
                     <>
                         <p>name: {card_holder.name}</p>
                         <p>card_number: {card_holder.card_number}</p>
                     </>
                 )
-            })}
+            })} */}
+            <CardHoldersTable data={state.data} history={props.history} />
         </LoadingContainer>
     )
 }

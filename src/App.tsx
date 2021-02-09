@@ -4,11 +4,24 @@ import './App.css';
 import CardHoldersContainer from 'modules/card_holders/containers/CardHoldersContainer';
 import CardHoldersNewContainer from 'modules/card_holders/containers/CardHoldersNewContainer';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import AppBar from 'common/components/AppBar/AppBar';
+import Container from '@material-ui/core/Container';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  root: {
+    marginTop: '5rem'
+  },
+});
 
 function App() {
+  const classes = useStyles();
+
   return (
     <div className="App">
-      <Connection />
+      <AppBar />
+      <Container maxWidth="md" className={classes.root}>
+      {/* <Connection /> */}
       <BrowserRouter>
       <Switch>
         <Route
@@ -22,6 +35,8 @@ function App() {
         />
       </Switch>
       </BrowserRouter>
+      </Container>
+      
     </div>
   );
 }

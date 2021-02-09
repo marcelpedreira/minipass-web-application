@@ -20,7 +20,7 @@ export default function Connection() {
     password: 'testing'
   };
 
-  const subscription = {
+  const subscription: {topic: string; qos: QoS} = {
     topic: 'access_control_topic',
     qos: 0
   };
