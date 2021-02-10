@@ -91,7 +91,11 @@ function App() {
           // var errorMessage = error.message;
         }
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
+      signOut: async () => {
+        const result = await firebase.auth().signOut();
+        console.log('result', result);
+        dispatch({ type: 'SIGN_OUT' })
+      },
       signUp: async (data: any) => {
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
@@ -118,9 +122,9 @@ function App() {
 
   return (
     <div className="App">
-      <AppBar />
       <AuthContext.Provider value={authContext}>
       <ToastContext.Provider value={{showToast}}>
+      <AppBar />
       <Container maxWidth="md" className={classes.root}>
       {/* <Connection /> */}
       <BrowserRouter>

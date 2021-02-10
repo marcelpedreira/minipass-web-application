@@ -57,10 +57,17 @@ export default function CardHoldersContainer(props: any) {
 
     const fetchData = async () => {
         dispatch({type: 'loading'});
-        const db = firebase.firestore();
-        const data = await db.collection('card_holders').get();
-        const payload = data.docs.map(doc => ({ref: doc.ref, ...doc.data()}));
-        dispatch({type: 'fetched', payload});
+        try {
+            const db = firebase.firestore();
+            const data = await db.collection('card_holders').get();
+            const payload = data.docs.map(doc => ({ref: doc.ref, ...doc.data()}));
+            dispatch({type: 'fetched', payload});
+        }
+        catch(error) {
+            console.log('error', error)
+            dispatch({type: 'error', payload: error});
+        }
+        
     }
 
     const message = state.error && state.error.message;
