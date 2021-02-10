@@ -1,8 +1,9 @@
 import React from 'react';
 import Connection from 'common/utils/mqttHook/Connection';
 import './App.css';
-import CardHoldersContainer from 'modules/card_holders/containers/CardHoldersContainer';
-import CardHoldersNewContainer from 'modules/card_holders/containers/CardHoldersNewContainer';
+import CardHoldersContainer from 'modules/CardHolders/containers/CardHoldersContainer';
+import UsersContainer from 'modules/Users/containers/UsersContainer';
+import CardHoldersNewContainer from 'modules/CardHolders/containers/CardHoldersNewContainer';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import AppBar from 'common/components/AppBar/AppBar';
 import Container from '@material-ui/core/Container';
@@ -10,7 +11,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import firebase from 'firebaseConfig';
-import SignInContainer from 'modules/signin/containers/SignInContainer'
+import SignInContainer from 'modules/SignIn/containers/SignInContainer'
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -138,6 +139,15 @@ function App() {
           path='/cardholders/new'
           component={CardHoldersNewContainer}
         />
+        <Route
+          path='/users'
+          exact={true}
+          component={UsersContainer}
+        />
+        {/* <Route
+          path='/users/new'
+          component={UsersNewContainer}
+        /> */}
       </Switch>
       </BrowserRouter>
       </Container>
