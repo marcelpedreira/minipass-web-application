@@ -6,6 +6,7 @@ import TextField from 'common/components/TextField/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import {CardHolder} from '../containers/CardHoldersContainer';
 
 const useStyles = makeStyles({
   root: {
@@ -16,8 +17,19 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CardHolderForm(props: any) {
+interface CardHolderFormProps {
+  title: string;
+  submit: (values: CardHolder) => void;
+  values?: CardHolder;
+}
+
+export default function CardHolderForm(props: CardHolderFormProps) {
   const classes = useStyles();
+
+  console.log('values', props.values)
+
+  const name = props.values ? props.values.name : "";
+  console.log('name', name)
 
   return (
     <Paper className={classes.root}>
@@ -25,16 +37,20 @@ export default function CardHolderForm(props: any) {
         {props.title}
       </Typography>
       <Formik
-          initialValues={{ name: "", card_number: "" }}
-          onSubmit={props.submitData}
+          initialValues={{ 
+            id: props.values ? props.values.id : "", 
+            name: props.values ? props.values.name : "",  
+            card_number: props.values ? props.values.card_number : "" 
+          }}
+          onSubmit={props.submit}
       >
         <Form>       
           <Grid container spacing={3}>
             <Grid item lg={4} md={4} sm={12}> 
-              <Field name="name" label="name" component={TextField} fullWidth margin="dense"/> 
+              <Field name="name" label="name" component={TextField} fullWidth margin="dense" /> 
             </Grid>
             <Grid item lg={4} md={4} sm={12}> 
-              <Field name="card_number" label="card_number" component={TextField} fullWidth margin="dense"/> 
+              <Field name="card_number" label="card_number" component={TextField} fullWidth margin="dense" /> 
             </Grid>
             <Grid item lg={12} md={12} sm={12}>
               <Button

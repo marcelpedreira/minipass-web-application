@@ -4,6 +4,7 @@ import './App.css';
 import CardHoldersContainer from 'modules/CardHolders/containers/CardHoldersContainer';
 import UsersContainer from 'modules/Users/containers/UsersContainer';
 import CardHoldersNewContainer from 'modules/CardHolders/containers/CardHoldersNewContainer';
+import CardHoldersEditContainer from 'modules/CardHolders/containers/CardHoldersEditContainer';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import AppBar from 'common/components/AppBar/AppBar';
 import Container from '@material-ui/core/Container';
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 export const ToastContext = React.createContext({
   // open: false,
   // setOpen: (open: boolean) => {},
-  showToast: () => {},
+  showToast: (msg: string) => {},
 });
 
 export interface AuthCredential {
@@ -109,8 +110,12 @@ function App() {
   );
 
   const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
-  const showToast = () => setOpen(true);
+  const showToast = (msg: string) => {
+    setMessage(msg);
+    setOpen(true);
+  }
 
   const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
     if (reason === 'clickaway') {
@@ -144,6 +149,10 @@ function App() {
           component={CardHoldersNewContainer}
         />
         <Route
+          path='/cardholders/edit/:id'
+          component={CardHoldersEditContainer}
+        />
+        <Route
           path='/users'
           exact={true}
           component={UsersContainer}
@@ -159,7 +168,7 @@ function App() {
       </AuthContext.Provider>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
-          This is a success message!
+          {message}
         </Alert>
       </Snackbar>
     </div>

@@ -2,9 +2,10 @@ import React from 'react'
 import LoadingContainer from 'common/components/LoadingContainer'
 import firebase from 'firebaseConfig'
 import CardHoldersTable from '../components/CardHoldersTable';
+import {ToastContext} from 'App';
 
 export interface CardHolder {
-    ref: string;
+    id: string;
     name: string;
     card_number: string;
 }
@@ -25,6 +26,8 @@ export default function CardHoldersContainer(props: any) {
         data: [],
         error: null
     };
+
+    const {showToast} = React.useContext(ToastContext);
 
     const [state, dispatch] = React.useReducer((state: CardHoldersState, action: any) => {
         switch (action.type) {
@@ -60,29 +63,39 @@ export default function CardHoldersContainer(props: any) {
         try {
             const db = firebase.firestore();
             const data = await db.collection('card_holders').get();
-            const payload = data.docs.map(doc => ({ref: doc.ref, ...doc.data()}));
+            // console.log('data', data)
+            const payload = data.docs.map(doc => ({
+                id: doc.ref.id, 
+                name: doc.data().name,
+                card_number: doc.data().card_number
+            }));
+            // console.log('payload', payload)
             dispatch({type: 'fetched', payload});
         }
         catch(error) {
             console.log('error', error)
             dispatch({type: 'error', payload: error});
         }
-        
+    }
+
+    const removeData = async (id: string) => {
+        try {
+            const documentRef = firebase.firestore().doc(`card_holders/${id}`);
+            await documentRef.delete();
+            showToast('Card holder successfully deleted.');
+            fetchData();
+        }
+        catch(error) {
+            console.log('error', error)
+            dispatch({type: 'error', payload: error});
+        }
     }
 
     const message = state.error && state.error.message;
 
     return (
         <LoadingContainer isLoading = {state.isloading} message = {message}>
-            {/* {state.data&&state.data.map((card_holder: CardHolder) => {
-                return (
-                    <>
-                        <p>name: {card_holder.name}</p>
-                        <p>card_number: {card_holder.card_number}</p>
-                    </>
-                )
-            })} */}
-            <CardHoldersTable data={state.data} history={props.history} />
+            <CardHoldersTable data={state.data} history={props.history} remove={removeData}/>
         </LoadingContainer>
     )
 }

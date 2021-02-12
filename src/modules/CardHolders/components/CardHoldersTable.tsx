@@ -5,10 +5,10 @@ import {CardHolder} from '../containers/CardHoldersContainer'
 interface CardHoldersTableProps {
   history: any; 
   data: CardHolder[];
-  // remove: (ref: string) => {};
+  remove: (id: string) => void;
 };
 
-export default function CardHoldersTable({history, data}: CardHoldersTableProps) {
+export default function CardHoldersTable({history, data, remove}: CardHoldersTableProps) {
   return (
     <MaterialTable
       options={{
@@ -16,16 +16,18 @@ export default function CardHoldersTable({history, data}: CardHoldersTableProps)
         search: false
       }}
       actions={[
-        // {
-        //   icon: "edit",
-        //   tooltip: "Edit",
-        //   onClick: (event, rowData) => history.push(`/cardholders/edit/${rowData.ref}`)
-        // },
-        // {
-        //   icon: "delete",
-        //   tooltip: "Remove",
-        //   onClick: (event, rowData) => remove(rowData.ref)
-        // },
+        rowData => ({
+          icon: 'edit',
+          tooltip: 'Edit',
+          onClick: (event) => history.push(`/cardholders/edit/${rowData.id}`)
+          // disabled: rowData.birthYear < 2000
+        }),
+        rowData => ({
+          icon: 'delete',
+          tooltip: 'Delete',
+          onClick: (event) => remove(rowData.id),
+          // disabled: rowData.birthYear < 2000
+        }),
         {
           icon: "add",
           tooltip: "Add",
