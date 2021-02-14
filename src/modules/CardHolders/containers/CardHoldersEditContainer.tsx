@@ -82,11 +82,15 @@ export default function CardHoldersEditContainer(props: any) {
         }
     }
 
+    const cancelSubmit = () => {
+        props.history.push('/cardholders');
+    }
+
     const message = state.error && state.error.message;
 
     return (
         <LoadingContainer isLoading = {state.isloading} message = {message}>
-            {state.data&&(<CardHoldersForm submit={submitData} title={"Edit Card Holder"} values={state.data}/>)}
+            {state.data&&(<CardHoldersForm submit={submitData} cancel={cancelSubmit} title={"Edit Card Holder"} values={state.data}/>)}
         </LoadingContainer>
     )
 }

@@ -25,7 +25,11 @@ export default function CardHoldersNewContainer(props: any) {
         }
     }
 
+    const cancelSubmit = () => {
+        props.history.push('/cardholders');
+    }
+
     return (
-        <CardHoldersForm submit={submitData} title={"New Card Holder"} />
+        <CardHoldersForm submit={submitData} cancel={cancelSubmit} title={"New Card Holder"} />
     )
 }

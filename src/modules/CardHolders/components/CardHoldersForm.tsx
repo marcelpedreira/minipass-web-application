@@ -20,6 +20,7 @@ const useStyles = makeStyles({
 interface CardHolderFormProps {
   title: string;
   submit: (values: CardHolder) => void;
+  cancel: () => void;
   values?: CardHolder;
 }
 
@@ -54,11 +55,20 @@ export default function CardHolderForm(props: CardHolderFormProps) {
             </Grid>
             <Grid item lg={12} md={12} sm={12}>
               <Button
+                style={{marginLeft: 2, marginRight: 2}}
                 type="submit"
                 color="primary"
                 variant="contained"
               >
                 Save
+              </Button>
+              <Button
+                style={{marginLeft: 2, marginRight: 2}}
+                color="primary"
+                variant="contained"
+                onClick={props.cancel}
+              >
+                Cancel
               </Button>
             </Grid>
           </Grid>
