@@ -48,7 +48,7 @@ export default function CardHoldersTable({history, data, remove}: CardHoldersTab
         },
       ]}
       data={data}
-      title="CardHolders"
+      title="Card Holders"
     />
   );
 }

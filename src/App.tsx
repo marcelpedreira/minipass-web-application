@@ -13,6 +13,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import firebase from 'firebaseConfig';
 import SignInContainer from 'modules/SignIn/containers/SignInContainer'
+import theme1 from "themes/theme1";
+import { MuiThemeProvider } from "@material-ui/core";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Dashboard from 'common/components/Dashboard/Dashboard'
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -128,43 +132,39 @@ function App() {
   return (
     <div className="App">
       <AuthContext.Provider value={authContext}>
-      <ToastContext.Provider value={{showToast}}>
-      <AppBar />
-      <Container maxWidth="md" className={classes.root}>
-      {/* <Connection /> */}
-      <BrowserRouter>
-      <Switch>
-        <Route
-          path='/login'
-          exact={true}
-          component={SignInContainer}
-        />
-        <Route
-          path='/cardholders'
-          exact={true}
-          component={CardHoldersContainer}
-        />
-        <Route
-          path='/cardholders/new'
-          component={CardHoldersNewContainer}
-        />
-        <Route
-          path='/cardholders/edit/:id'
-          component={CardHoldersEditContainer}
-        />
-        <Route
-          path='/users'
-          exact={true}
-          component={UsersContainer}
-        />
-        {/* <Route
-          path='/users/new'
-          component={UsersNewContainer}
-        /> */}
-      </Switch>
-      </BrowserRouter>
-      </Container>
-      </ToastContext.Provider>
+        <ToastContext.Provider value={{showToast}}>
+          <MuiThemeProvider theme={theme1}>
+            <BrowserRouter>
+              <Dashboard>
+                <Switch>
+                  <Route
+                    path='/login'
+                    exact={true}
+                    component={SignInContainer}
+                  />
+                  <Route
+                    path='/cardholders'
+                    exact={true}
+                    component={CardHoldersContainer}
+                  />
+                  <Route
+                    path='/cardholders/new'
+                    component={CardHoldersNewContainer}
+                  />
+                  <Route
+                    path='/cardholders/edit/:id'
+                    component={CardHoldersEditContainer}
+                  />
+                  <Route
+                    path='/users'
+                    exact={true}
+                    component={UsersContainer}
+                  />
+                </Switch>
+              </Dashboard>
+            </BrowserRouter>
+          </MuiThemeProvider>
+        </ToastContext.Provider>
       </AuthContext.Provider>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
