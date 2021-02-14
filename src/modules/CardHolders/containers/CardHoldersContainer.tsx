@@ -56,7 +56,7 @@ export default function CardHoldersContainer(props: any) {
 
     React.useEffect(() => {
         fetchData();
-    }, [])
+    }, []);
 
     const fetchData = async () => {
         dispatch({type: 'loading'});

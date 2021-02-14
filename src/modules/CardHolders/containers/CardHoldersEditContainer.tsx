@@ -1,5 +1,7 @@
 import React from 'react'
 import firebase from 'firebaseConfig';
+
+import LoadingContainer from 'common/components/LoadingContainer'
 import CardHoldersForm from '../components/CardHoldersForm';
 import {ToastContext} from 'App';
 import {CardHolder} from './CardHoldersContainer'
@@ -45,6 +47,7 @@ export default function CardHoldersEditContainer(props: any) {
     }, initialState);
 
     React.useEffect(() => {
+        console.log('use effect')
         fetchData();
     }, []);
 
@@ -79,7 +82,11 @@ export default function CardHoldersEditContainer(props: any) {
         }
     }
 
+    const message = state.error && state.error.message;
+
     return (
-        <CardHoldersForm submit={submitData} title={"Edit Card Holder"} values={state.data}/>
+        <LoadingContainer isLoading = {state.isloading} message = {message}>
+            {state.data&&(<CardHoldersForm submit={submitData} title={"Edit Card Holder"} values={state.data}/>)}
+        </LoadingContainer>
     )
 }

@@ -8,6 +8,7 @@ export interface LoadingContainerProps {
 
 const LoadingContainer: React.SFC<LoadingContainerProps> = props => {
   if (props.isLoading) {
+    console.log('loading')
     return (
       <div>
         <p>Loading...</p>
