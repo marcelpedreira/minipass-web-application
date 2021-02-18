@@ -1,12 +1,14 @@
 import React from 'react'
 import SignInForm from '../components/SignInForm';
-import {AuthCredential, AuthContext} from 'App'
+import {AuthCredential, AuthContext} from 'common/utils/AuthContext/AuthContext'
 
-export default function SignInContainer() {
-    const {signIn} = React.useContext(AuthContext);
+export default function SignInContainer(props: any) {
+    const {signIn, isSignOut} = React.useContext(AuthContext);
 
     const submitData = async (values: AuthCredential) => {
-        signIn(values);
+        await signIn(values);
+        console.log('signout', isSignOut());
+        props.history.push('/');
     }
 
     return (

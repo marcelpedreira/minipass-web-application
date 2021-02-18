@@ -19,6 +19,14 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Container from '@material-ui/core/Container';
 import { NavLink } from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import {AuthContext} from 'common/utils/AuthContext/AuthContext'
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import CardHoldersContainer from 'modules/CardHolders/containers/CardHoldersContainer';
+import UsersContainer from 'modules/Users/containers/UsersContainer';
+import CardHoldersNewContainer from 'modules/CardHolders/containers/CardHoldersNewContainer';
+import CardHoldersEditContainer from 'modules/CardHolders/containers/CardHoldersEditContainer';
+import { spacing } from 'material-ui/styles';
 
 const drawerWidth = 240;
 
@@ -87,6 +95,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function MiniDrawer(props: any) {
+  const {signOut} = React.useContext(AuthContext);
+
+  const logout = () => {
+    signOut();
+    props.history.push('/');
+  }
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -120,9 +135,10 @@ export default function MiniDrawer(props: any) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap style={{flexGrow: 1, color: 'white'}}>
             Minipass
           </Typography>
+          <Button color="inherit" onClick={logout}>Logout</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -145,13 +161,13 @@ export default function MiniDrawer(props: any) {
         </div>
         <Divider />
         <List>
-          <NavLink to={'/cardholders'}>
+          <NavLink to={'/dashboard/cardholders'}>
             <ListItem button key={'Card Holders'}>
               <ListItemIcon><InboxIcon /></ListItemIcon>
               <ListItemText primary={'Card Holders'} />
             </ListItem>
           </NavLink>
-          <NavLink to={'/users'}>
+          <NavLink to={'/dashboard/users'}>
             <ListItem button key={'Users'}>
               <ListItemIcon><MailIcon /></ListItemIcon>
               <ListItemText primary={'Users'} />
@@ -167,9 +183,24 @@ export default function MiniDrawer(props: any) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        
-            {props.children}
-        
+        <Route
+          path='/dashboard/cardholders'
+          exact={true}
+          component={CardHoldersContainer}
+        />
+        <Route
+          path='/dashboard/cardholders/new'
+          component={CardHoldersNewContainer}
+        />
+        <Route
+          path='/dashboard/cardholders/edit/:id'
+          component={CardHoldersEditContainer}
+        />
+        <Route
+          path='/dashboard/users'
+          exact={true}
+          component={UsersContainer}
+        />
       </main>
     </div>
   );

@@ -35,8 +35,8 @@ export default function UsersTable({history, data}: UsersTableProps) {
       ]}
       columns={[
         {
-          title: "name",
-          field: "name",
+          title: "email",
+          field: "email",
           // render: (rowData) => (<Typography>{rowData.serial}</Typography>)
         },
         {
