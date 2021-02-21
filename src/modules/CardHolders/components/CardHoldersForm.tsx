@@ -11,6 +11,7 @@ import {CardHolder} from '../containers/CardHoldersContainer';
 const useStyles = makeStyles({
   root: {
     padding: '2rem',
+
   },
   title: {
     marginBottom: '1rem'
@@ -27,11 +28,6 @@ interface CardHolderFormProps {
 export default function CardHolderForm(props: CardHolderFormProps) {
   const classes = useStyles();
 
-  console.log('values', props.values)
-
-  const name = props.values ? props.values.name : "";
-  console.log('name', name)
-
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h3" className={classes.title}>
@@ -47,13 +43,15 @@ export default function CardHolderForm(props: CardHolderFormProps) {
       >
         <Form>       
           <Grid container spacing={3}>
-            <Grid item lg={4} md={4} sm={12}> 
+            <Grid item lg={6} md={6} sm={12}> 
               <Field name="name" label="name" component={TextField} fullWidth margin="dense" /> 
             </Grid>
-            <Grid item lg={4} md={4} sm={12}> 
+            <Grid item lg={6} md={6} sm={12}> 
               <Field name="card_number" label="card_number" component={TextField} fullWidth margin="dense" /> 
             </Grid>
-            <Grid item lg={12} md={12} sm={12}>
+            
+          </Grid>
+          <div style={{display: 'flex', flexDirection: 'row-reverse', marginTop: 10}}>
               <Button
                 style={{marginLeft: 2, marginRight: 2}}
                 type="submit"
@@ -70,8 +68,7 @@ export default function CardHolderForm(props: CardHolderFormProps) {
               >
                 Cancel
               </Button>
-            </Grid>
-          </Grid>
+            </div>
         </Form>
       </Formik>
     </Paper>

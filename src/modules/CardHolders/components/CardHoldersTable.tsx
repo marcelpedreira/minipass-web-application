@@ -19,7 +19,7 @@ export default function CardHoldersTable({history, data, remove}: CardHoldersTab
         rowData => ({
           icon: 'edit',
           tooltip: 'Edit',
-          onClick: (event) => history.push(`/cardholders/edit/${rowData.id}`)
+          onClick: (event) => history.push(`/dashboard/cardholders/edit/${rowData.id}`)
           // disabled: rowData.birthYear < 2000
         }),
         rowData => ({
@@ -32,7 +32,7 @@ export default function CardHoldersTable({history, data, remove}: CardHoldersTab
           icon: "add",
           tooltip: "Add",
           isFreeAction: true,
-          onClick: (event) => history.push('/cardholders/new')
+          onClick: (event) => history.push('/dashboard/cardholders/new')
         },
       ]}
       columns={[

@@ -196,11 +196,11 @@ export default function MiniDrawer(props: any) {
           path='/dashboard/cardholders/edit/:id'
           component={CardHoldersEditContainer}
         />
-        <Route
+        {/* <Route
           path='/dashboard/users'
           exact={true}
           component={UsersContainer}
-        />
+        /> */}
       </main>
     </div>
   );
