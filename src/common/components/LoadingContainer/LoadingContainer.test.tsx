@@ -1,5 +1,4 @@
 import React from "react";
-import { View, Text, ActivityIndicator } from "react-native";
 import { create, act, ReactTestRenderer } from "react-test-renderer";
 
 import LoadingContainer from "./LoadingContainer";
@@ -36,21 +35,20 @@ describe("<LoadingContainer />", () => {
       );
     });
     const testInstance = rendered.root;
-    expect(testInstance.findByType(Text)).toBeTruthy();
-    // expect(testInstance.findByType(Text).children).toEqual(["some error"]);
+    expect(testInstance.findByType('p')).toBeTruthy();
   });
 
-  it("should render <ActivityIndicator /> when receiving loading status", () => {
-    act(() => {
-      rendered.update(
-        <LoadingContainer message={null} isLoading={true}>
-          some children
-        </LoadingContainer>
-      );
-    });
-    const testInstance = rendered.root;
-    expect(testInstance.findByType(ActivityIndicator)).toBeTruthy();
-  });
+  // it("should render <ActivityIndicator /> when receiving loading status", () => {
+  //   act(() => {
+  //     rendered.update(
+  //       <LoadingContainer message={null} isLoading={true}>
+  //         some children
+  //       </LoadingContainer>
+  //     );
+  //   });
+  //   const testInstance = rendered.root;
+  //   expect(testInstance.findByType(ActivityIndicator)).toBeTruthy();
+  // });
 
   // it('App test against snapshot', () => {
   //   const tree = renderer.create(<App />).toJSON();

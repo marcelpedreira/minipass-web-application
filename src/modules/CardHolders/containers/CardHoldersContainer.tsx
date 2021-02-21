@@ -3,7 +3,7 @@ import LoadingContainer from 'common/components/LoadingContainer'
 // import firebase from 'firebaseConfig'
 import CardHoldersTable from '../components/CardHoldersTable';
 import {ToastContext} from 'App';
-import useFirebase from 'common/utils/FirebaseHook/FirebaseHook'
+import {useFirebase} from 'common/utils/FirebaseHook/FirebaseHook'
 
 export interface CardHolder {
     id: string;
