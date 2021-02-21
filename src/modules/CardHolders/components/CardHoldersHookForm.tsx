@@ -2,7 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
-// import * as yup from 'yup';
+import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -21,19 +21,20 @@ const useStyles = makeStyles({
 interface CardHolderFormProps {
   title: string;
   submit: (values: CardHolder) => void;
-  values: CardHolder;
+  cancel: () => void;
+  values?: CardHolder;
 }
 
-// const validationSchema = yup.object({
-//   email: yup
-//     .string('Enter your email')
-//     .email('Enter a valid email')
-//     .required('Email is required'),
-//   password: yup
-//     .string('Enter your password')
-//     .min(8, 'Password should be of minimum 8 characters length')
-//     .required('Password is required'),
-// });
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required('Name is required'),
+  card_number: yup
+    .number()
+    .positive()
+    .integer()
+    .required('Card number is required'),
+});
 
 export default function CardHolderForm(props: CardHolderFormProps) {
   const classes = useStyles();
@@ -43,7 +44,7 @@ export default function CardHolderForm(props: CardHolderFormProps) {
       name: props.values ? props.values.name : "",  
       card_number: props.values ? props.values.card_number : "" 
     },
-    // validationSchema: validationSchema,
+    validationSchema: validationSchema,
     onSubmit: props.submit
   });
 
@@ -74,9 +75,24 @@ export default function CardHolderForm(props: CardHolderFormProps) {
           error={formik.touched.card_number && Boolean(formik.errors.card_number)}
           helperText={formik.touched.card_number && formik.errors.card_number}
         />
-        <Button color="primary" variant="contained" fullWidth type="submit">
-          Submit
-        </Button>
+        <div style={{display: 'flex', flexDirection: 'row-reverse', marginTop: 10}}>
+              <Button
+                style={{marginLeft: 2, marginRight: 2}}
+                type="submit"
+                color="primary"
+                variant="contained"
+              >
+                Save
+              </Button>
+              <Button
+                style={{marginLeft: 2, marginRight: 2}}
+                color="primary"
+                variant="contained"
+                onClick={props.cancel}
+              >
+                Cancel
+              </Button>
+            </div>
       </form>
     </Paper>
   );

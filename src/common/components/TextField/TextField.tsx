@@ -28,6 +28,7 @@ const TextFieldInput = (props: any) => {
       id={name}
       name={name}
       label={label}
+      helperText={touched.name && error.name}
       // className={classes.textField}
       value={value}
       // onChange={event => input.onChange(event.target.value)}

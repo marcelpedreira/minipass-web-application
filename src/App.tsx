@@ -1,5 +1,4 @@
 import React from 'react';
-import Connection from 'common/utils/mqttHook/Connection';
 import './App.css';
 import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
@@ -12,6 +11,7 @@ import { MuiThemeProvider } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Dashboard from 'common/components/Dashboard/Dashboard'
 import AuthContextProvider from 'common/utils/AuthContext/AuthContext'
+import MqttContextProvider from 'common/utils/MqttContext/MqttContext'
 import PrivateRoute from 'common/components/PrivateRoute/PrivateRoute'
 
 function Alert(props: AlertProps) {
@@ -54,6 +54,7 @@ function App() {
   return (
     <div className="App">
       <AuthContextProvider>
+      <MqttContextProvider>
         <ToastContext.Provider value={{showToast}}>
           <MuiThemeProvider theme={theme1}>
             <BrowserRouter>
@@ -66,6 +67,7 @@ function App() {
             </BrowserRouter>
           </MuiThemeProvider>
         </ToastContext.Provider>
+      </MqttContextProvider>
       </AuthContextProvider>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">

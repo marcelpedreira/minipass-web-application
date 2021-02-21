@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {CardHolder} from '../containers/CardHoldersContainer';
+import * as yup from 'yup';
 
 const useStyles = makeStyles({
   root: {
@@ -16,6 +17,15 @@ const useStyles = makeStyles({
   title: {
     marginBottom: '1rem'
   }
+});
+
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required('Name is required'),
+  card_number: yup
+    .number()
+    .required('Card number is required'),
 });
 
 interface CardHolderFormProps {
@@ -39,6 +49,7 @@ export default function CardHolderForm(props: CardHolderFormProps) {
             name: props.values ? props.values.name : "",  
             card_number: props.values ? props.values.card_number : "" 
           }}
+          validationSchema = {validationSchema}
           onSubmit={props.submit}
       >
         <Form>       
