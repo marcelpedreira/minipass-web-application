@@ -44,7 +44,7 @@ export default function useFirebase () {
         try {
             const db = firebase.firestore();
             const data = await db.collection(col).get();
-            // console.log('data', data)
+            console.log('data', data)
             const payload = data.docs.map(doc => ({
                 id: doc.ref.id, 
                 name: doc.data().name,
