@@ -1,6 +1,6 @@
 import React from 'react'
 import MaterialTable from "material-table";
-import {CardHolder} from '../containers/CardHoldersContainer'
+import {CardHolder} from '../../containers/CardHoldersContainer'
 
 interface CardHoldersTableProps {
   history: any; 

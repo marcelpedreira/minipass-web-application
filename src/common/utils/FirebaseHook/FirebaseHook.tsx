@@ -7,7 +7,7 @@ export interface RequestState {
     error: Error |  null;
 }
 
-export function useFirebase () {
+export default function useFirebase () {
     const initialState: RequestState = {
         isloading: false,
         data: [],

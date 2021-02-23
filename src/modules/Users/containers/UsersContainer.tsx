@@ -1,7 +1,7 @@
 import React from 'react'
 import LoadingContainer from 'common/components/LoadingContainer';
 import UsersTable from '../components/UsersTable';
-import useFirebase from 'common/utils/FirebaseHook/FirebaseHook'
+import {useFirebase} from 'common/utils/FirebaseHook/FirebaseHook'
 
 export interface User {
     ref: string;
