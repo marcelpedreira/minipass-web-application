@@ -39,7 +39,7 @@ export default function useFirebase () {
         }
     }, initialState);
 
-    const fetchData = async (col: string) => {
+    const fetchCol = async (col: string) => {
         dispatch({type: 'loading'});
         try {
             const db = firebase.firestore();
@@ -59,16 +59,43 @@ export default function useFirebase () {
         }
     }
 
-    const removeData = async (doc: string) => {
+    const removeDoc = async (doc: string) => {
         try {
             const documentRef = firebase.firestore().doc(doc);
             await documentRef.delete();
+            return true;
         }
         catch(error) {
             console.log('error', error)
             dispatch({type: 'error', payload: error});
+            return false;
+        }
+    }
+
+    const fetchDoc = async (doc: string) => {
+        dispatch({type: 'loading'});
+        try {
+            const docRef = await firebase.firestore().doc(doc).get();
+            const payload = {id: docRef.ref.id, ...docRef.data()};
+            dispatch({type: 'fetched', payload});
+        }
+        catch(error) {
+            dispatch({type: 'error', payload: error});
+        }
+    }
+
+    const editDoc = async (doc: string, newValue: any) => {
+        try{
+            const documentRef = firebase.firestore().doc(doc);
+            await documentRef.set(newValue);
+            return true;
+        }
+        catch(error) {
+            dispatch({type: 'error', payload: error});
+            console.log('error', error);
+            return false;
         }
     }
   
-    return { state, fetchData, removeData };
+    return { state, fetchCol, removeDoc, fetchDoc, editDoc };
   };

@@ -1,7 +1,7 @@
 import React from 'react'
 import firebase from 'firebaseConfig';
-import CardHoldersForm from '../components/CardHoldersForm';
-import {CardHolder} from './CardHoldersContainer'
+import CardHoldersForm from '../../components/CardHoldersForm';
+import {CardHolder} from '../CardHoldersContainer'
 
 import {ToastContext} from 'App';
 

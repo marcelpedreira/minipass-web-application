@@ -1,9 +1,9 @@
 import React from 'react'
 import LoadingContainer from 'common/components/LoadingContainer'
 // import firebase from 'firebaseConfig'
-import CardHoldersTable from '../components/CardHoldersTable';
+import CardHoldersTable from '../../components/CardHoldersTable';
 import {ToastContext} from 'App';
-import {useFirebase} from 'common/utils/FirebaseHook/FirebaseHook'
+import useFirebase from 'common/utils/FirebaseHook/FirebaseHook'
 
 export interface CardHolder {
     id: string;
@@ -29,7 +29,7 @@ export default function CardHoldersContainer(props: any) {
     // };
 
     const {showToast} = React.useContext(ToastContext);
-    const {state, fetchData, removeData} = useFirebase();
+    const {state, fetchCol, removeDoc} = useFirebase();
 
     // const [state, dispatch] = React.useReducer((state: CardHoldersState, action: any) => {
     //     switch (action.type) {
@@ -57,7 +57,7 @@ export default function CardHoldersContainer(props: any) {
     // }, initialState);
 
     React.useEffect(() => {
-        fetchData('card_holders');
+        fetchCol('card_holders');
     }, []);
 
     // const fetchData = async () => {
@@ -94,9 +94,10 @@ export default function CardHoldersContainer(props: any) {
     // }
 
     const remove = (id: string) => {
-        removeData(`card_holders/${id}`);
-        showToast('Card holder successfully deleted.');
-        fetchData('card_holders');
+        if(removeDoc(`card_holders/${id}`)) {
+            showToast('Card holder successfully deleted.');
+            fetchCol('card_holders');
+        }
     }
 
     const message = state.error && state.error.message;

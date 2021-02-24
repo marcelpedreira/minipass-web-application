@@ -1,18 +1,27 @@
 import React from "react";
 import { create, act, ReactTestRenderer } from "react-test-renderer";
 
-import CardHoldersContainer from "./CardHoldersContainer";
-import CardHoldersTable from "../components/CardHoldersTable";
+import CardHoldersEditContainer from "./CardHoldersEditContainer";
 
+jest.mock("common/utils/FirebaseHook/FirebaseHook", () => {
+  return () => ({
+    state: {
+      data: [],
+      loading: false,
+      error: null
+    },
+    fetchDoc: () => {},
+    removeDoc: () => {}
+  })
+});
 
-jest.mock("common/utils/FirebaseHook/FirebaseHook", () => ({
-  
-  useFirebase: () => ({
-    state: {data: [],
-    loading: false,
-    error: null},
-    fetchData: () => {},
-    removeData: () => {}
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: jest.fn()
+  }),
+  useParams: () => ({
+    id: 'some-id'
   })
 }));
 
@@ -20,10 +29,8 @@ describe("<CardHoldersContainer />", () => {
   let rendered: ReactTestRenderer;
 
   it("render okay", () => {
-    
-
     act(() => {
-      rendered = create(<CardHoldersContainer />);
+      rendered = create(<CardHoldersEditContainer />);
     });
 
     expect(rendered).toBeTruthy();

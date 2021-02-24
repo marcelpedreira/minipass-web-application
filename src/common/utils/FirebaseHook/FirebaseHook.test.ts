@@ -27,13 +27,13 @@ describe("useFirebase", () => {
 
 
     act(() => {
-      result.current.fetchData("some-data");
+      result.current.fetchCol("some-data");
     });
 
     expect(result.current.state.isloading).toBe(true);
 
     await act(async () => {
-      result.current.fetchData("some-collection");
+      result.current.fetchCol("some-collection");
     });
 
     expect(result.current.state.data).toEqual([{ id: 'abc123', name: 'vermont', card_number: '111111' }, { id: '123abc', name: 'maine', card_number: '222222' }]);
