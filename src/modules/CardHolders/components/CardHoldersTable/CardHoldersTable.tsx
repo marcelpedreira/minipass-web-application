@@ -1,14 +1,17 @@
 import React from 'react'
 import MaterialTable from "material-table";
 import {CardHolder} from '../../containers/CardHoldersContainer'
+import { useHistory } from "react-router-dom";
 
 interface CardHoldersTableProps {
-  history: any; 
+  // history: any; 
   data: CardHolder[];
   remove: (id: string) => void;
 };
 
-export default function CardHoldersTable({history, data, remove}: CardHoldersTableProps) {
+export default function CardHoldersTable({data, remove}: CardHoldersTableProps) {
+  const history = useHistory();
+  
   return (
     <MaterialTable
       options={{

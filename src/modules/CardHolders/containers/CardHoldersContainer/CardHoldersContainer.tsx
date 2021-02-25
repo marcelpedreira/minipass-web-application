@@ -2,7 +2,7 @@ import React from 'react'
 import LoadingContainer from 'common/components/LoadingContainer'
 // import firebase from 'firebaseConfig'
 import CardHoldersTable from '../../components/CardHoldersTable';
-import {ToastContext} from 'App';
+import {ToastContext} from 'common/utils/ToastContext/ToastContext';
 import useFirebase from 'common/utils/FirebaseHook/FirebaseHook'
 
 export interface CardHolder {
@@ -104,7 +104,7 @@ export default function CardHoldersContainer(props: any) {
 
     return (
         <LoadingContainer isLoading = {state.isloading} message = {message}>
-            <CardHoldersTable data={state.data} history={props.history} remove={remove}/>
+            <CardHoldersTable data={state.data} remove={remove}/>
         </LoadingContainer>
     )
 }

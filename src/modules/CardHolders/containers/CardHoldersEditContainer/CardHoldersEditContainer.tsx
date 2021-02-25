@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import useFirebase from 'common/utils/FirebaseHook/FirebaseHook'
 import LoadingContainer from 'common/components/LoadingContainer'
 import CardHoldersForm from '../../components/CardHoldersForm';
-import {ToastContext} from 'App';
+import {ToastContext} from 'common/utils/ToastContext/ToastContext';
 import {CardHolder} from '../CardHoldersContainer'
 
 interface RouteParams {
