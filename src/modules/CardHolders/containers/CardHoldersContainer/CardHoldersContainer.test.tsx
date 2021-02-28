@@ -1,7 +1,11 @@
 import React from "react";
-import { create, act, ReactTestRenderer } from "react-test-renderer";
+import Enzyme from 'enzyme';
+import { createShallow  } from '@material-ui/core/test-utils';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import CardHoldersContainer from "./CardHoldersContainer";
+
+Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock("common/utils/FirebaseHook/FirebaseHook", () => {
   return () => ({
@@ -16,14 +20,12 @@ jest.mock("common/utils/FirebaseHook/FirebaseHook", () => {
 });
 
 describe("<CardHoldersContainer />", () => {
-  let rendered: ReactTestRenderer;
+  let shallow;
 
   it("render okay", () => {
-    act(() => {
-      rendered = create(<CardHoldersContainer />);
-    });
-
-    expect(rendered).toBeTruthy();
+    shallow = createShallow();
+    const wrapper = shallow(<CardHoldersContainer />);
+    expect(wrapper).toBeTruthy();
   });
 
   // it("should not render <UserList />", () => {

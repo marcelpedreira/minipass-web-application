@@ -1,9 +1,12 @@
 import React from "react";
-import { create, act, ReactTestRenderer } from "react-test-renderer";
-import { createRender } from '@material-ui/core/test-utils';
+import Enzyme from 'enzyme';
+import { createShallow  } from '@material-ui/core/test-utils';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import CardHoldersTable from "./CardHoldersTable";
 import {CardHolder} from '../../containers/CardHoldersContainer'
+
+Enzyme.configure({ adapter: new Adapter() });
 
 const data: CardHolder[] = [
   {id: '1', name: 'user1', card_number: '111111'},
@@ -11,19 +14,16 @@ const data: CardHolder[] = [
 ];
 
 describe("<CardHoldersTable />", () => {
-  let rendered: ReactTestRenderer;
+    let shallow;
 
   it("render okay", () => {
-    act(() => {
-      rendered = create(
-        <CardHoldersTable
-          data={data}
-          remove={() => {}}
-        />
-      );
-      
-    });
-    expect(rendered).toBeTruthy();
+    shallow = createShallow();
+
+    const wrapper = shallow(<CardHoldersTable
+      data={data}
+      remove={() => {}}
+    />);
+    expect(wrapper).toBeTruthy();
   });
 
   // it("Test against snapshot", () => {
